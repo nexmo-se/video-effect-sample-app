@@ -3,9 +3,6 @@ import React, { useState, useRef, useCallback, useContext } from 'react';
 import OT, {Session} from '@opentok/client';
 import { BackgroundBlurEffect } from '@vonage/video-effects';
 
-const apikey = process.env.VIDEO_API_KEY;
-const sessionId = process.env.VIDEO_SESSION_ID;
-const token = process.env.VIDEO_TOKEN;
 
 export function usePublisher() {
   const backgroundBlur: any = useRef(null);
@@ -24,7 +21,7 @@ export function usePublisher() {
       });
   };
 
-  const publishToSession = async (outputVideoStream: MediaStream) => {
+  const initPublisher = async (outputVideoStream: MediaStream) => {
       if (publisher && session && localMediaTrack.current) {
         publisher.current = OT.initPublisher(
             'publisher',
@@ -39,7 +36,7 @@ export function usePublisher() {
               console.log('Publisher Created');
             }
           );
-          if (apikey && sessionId && token) {
+          /* if (apikey && sessionId && token) {
             session.current = OT.initSession(apikey, sessionId);
             session.current.on('streamCreated', (event: any) => {
               session.subscribe(event.stream, (err: any) => {
@@ -61,7 +58,7 @@ export function usePublisher() {
                 console.log('Successfully published the stream');
               });
             });
-          }
+          } */
       }      
   };
 
@@ -73,7 +70,7 @@ export function usePublisher() {
       blurFilterRadius
     });
     await backgroundBlur.current.loadModel();
-    publishToSession(backgroundBlur.current.startEffect(localMediaTrack.current));
+    initPublisher(backgroundBlur.current.startEffect(localMediaTrack.current));
   };
 
   const destroyTracks = ()=>{
