@@ -11,7 +11,7 @@ export function usePublisher() {
   const localMediaTrack = useRef(null);
 
   const createLocalTrack = async () => {
-    return OT.getUserMedia({videoSource: true})
+    return OT.getUserMedia({videoSource: true, audioSource: null})
       .then((track: any) => {
         localMediaTrack.current = track;
         /* audioTrack = track.getAudioTracks()[0]; */
@@ -26,7 +26,7 @@ export function usePublisher() {
         publisher.current = OT.initPublisher(
             'publisher',
             {
-              audioSource: localMediaTrack.current.getAudioTracks()[0],
+              /* audioSource: outputVideoStream.getAudioTracks()[0], */
               videoSource: outputVideoStream.getVideoTracks()[0],
               width: 640,
               height: 480,
