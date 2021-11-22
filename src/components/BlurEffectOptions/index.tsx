@@ -5,27 +5,36 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import BlurCircular from '@material-ui/icons/BlurCircular';
+import { Box, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
-    width: 400
+    // width: 400
   },
   input: {
-    width: 42,
-  },
-  
+    width: 42
+  }
 });
 
-export default function EffectOptions({maskBlurRadius, setMaskBlurRadius,blurFilterRadius, setBlurFilterRadius }) {
+export default function EffectOptions({
+  maskBlurRadius,
+  setMaskBlurRadius,
+  blurFilterRadius,
+  setBlurFilterRadius,
+  handleStartBlurEffect
+}) {
   const classes = useStyles();
-  
 
   const handleBlurRadiusChange = (event, newValue) => {
     setMaskBlurRadius(newValue);
   };
 
   const handleInputChange = (event) => {
-    setMaskBlurRadius(event.target.maskBlurRadius === '' ? 0 : Number(event.target.maskBlurRadius));
+    setMaskBlurRadius(
+      event.target.maskBlurRadius === ''
+        ? 0
+        : Number(event.target.maskBlurRadius)
+    );
   };
 
   const handleBlurFilterChange = (event, newValue) => {
@@ -33,7 +42,11 @@ export default function EffectOptions({maskBlurRadius, setMaskBlurRadius,blurFil
   };
 
   const handleInputBlurFilterChange = (event) => {
-    setBlurFilterRadius(event.target.blurFilterRadius === '' ? 0 : Number(event.target.blurFilterRadius));
+    setBlurFilterRadius(
+      event.target.blurFilterRadius === ''
+        ? 0
+        : Number(event.target.blurFilterRadius)
+    );
   };
 
   const handleBlur = () => {
@@ -46,9 +59,9 @@ export default function EffectOptions({maskBlurRadius, setMaskBlurRadius,blurFil
 
   const handleBlurFilter = () => {
     if (blurFilterRadius < 0) {
-        setBlurFilterRadius(0);
+      setBlurFilterRadius(0);
     } else if (blurFilterRadius > 30) {
-        setBlurFilterRadius(30);
+      setBlurFilterRadius(30);
     }
   };
 
@@ -57,15 +70,18 @@ export default function EffectOptions({maskBlurRadius, setMaskBlurRadius,blurFil
 
   return (
     <div className={classes.root}>
-      <h3>Blur Effect Options</h3>    
+      <h3>Blur Effect Options</h3>
       <Grid spacing={2} alignItems="center" container>
-      <h3>Mask Blur Radius</h3>  
+        <h3>Mask Blur Radius</h3>
         <Grid item xs>
-          <Slider
+            <Box width={300}>
+            <Slider
             value={typeof maskBlurRadius === 'number' ? maskBlurRadius : 0}
             onChange={handleBlurRadiusChange}
             aria-labelledby="input-slider"
           />
+            </Box>
+          
         </Grid>
         <Grid item>
           <Input
@@ -79,13 +95,13 @@ export default function EffectOptions({maskBlurRadius, setMaskBlurRadius,blurFil
               min: 0,
               max: 100,
               type: 'number',
-              'aria-labelledby': 'input-slider',
+              'aria-labelledby': 'input-slider'
             }}
           />
         </Grid>
       </Grid>
       <Grid spacing={2} alignItems="center" container>
-      <h3> Blur Filter Radius</h3>  
+        <h3> Blur Filter Radius</h3>
         <Grid item xs>
           <Slider
             value={typeof blurFilterRadius === 'number' ? blurFilterRadius : 0}
@@ -105,9 +121,18 @@ export default function EffectOptions({maskBlurRadius, setMaskBlurRadius,blurFil
               min: 0,
               max: 100,
               type: 'number',
-              'aria-labelledby': 'input-slider',
+              'aria-labelledby': 'input-slider'
             }}
           />
+          <div>
+            <Button
+              variant="contained"
+              onClick={handleStartBlurEffect}
+              color="primary"
+            >
+              Start Blur Effect
+            </Button>
+          </div>
         </Grid>
       </Grid>
     </div>

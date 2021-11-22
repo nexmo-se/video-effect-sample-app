@@ -4,7 +4,8 @@ import './App.css';
 
 import { usePublisher } from './hooks/usePublisher';
 import Button from '@material-ui/core/Button';
-import EffectOptions from './components/EffectOptions';
+import BlurEffectOptions from './components/BlurEffectOptions';
+import VirtualBgEffectOptions from './components/VirtualBgEffectOptions';
 
 function App() {
   const { startBackgroundBlur, stopEffect } = usePublisher();
@@ -26,22 +27,22 @@ function App() {
         <div id="publisher">
         </div>
         <div className="effect-options-container">
-          <EffectOptions
+          <BlurEffectOptions
             maskBlurRadius={maskBlurRadius}
             setMaskBlurRadius={setMaskBlurRadius}
             blurFilterRadius={blurFilterRadius}
             setBlurFilterRadius={setBlurFilterRadius}
-          ></EffectOptions>
-        </div>
-      </div>
-      <div className="buttons-container">
-            <Button variant="contained" onClick={startBlur} color="primary">
-              Start Blur Effect
-            </Button>
+            handleStartBlurEffect={startBlur}
+          ></BlurEffectOptions>
+          <VirtualBgEffectOptions />
+          <div className="buttons-container">
+            
             <Button variant="contained" onClick={stopBlur}>
               Stop Effect
             </Button>
-          </div>
+        </div>
+        </div>
+      </div>
     </div>
   );
 }
