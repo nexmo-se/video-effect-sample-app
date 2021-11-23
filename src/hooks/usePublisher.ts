@@ -1,11 +1,12 @@
 import React, { useState, useRef, useCallback, useContext } from 'react';
 
 import OT, {Session} from '@opentok/client';
-import { BackgroundBlurEffect } from '@vonage/video-effects';
+import { BackgroundBlurEffect, VirtualBackgroundEffect } from '@vonage/video-effects';
 
 
 export function usePublisher() {
   const backgroundBlur: any = useRef(null);
+  const virtualBg: any = useRef(null);
   const publisher: any = useRef({});
   const session: any = useRef({});
   const localMediaTrack = useRef(null);
@@ -73,6 +74,20 @@ export function usePublisher() {
     initPublisher(backgroundBlur.current.startEffect(localMediaTrack.current));
   };
 
+  const startVirtualBgEffect = async ({maskBlurRadius, image}) => {  
+    await createLocalTrack();
+    virtualBg.current = new VirtualBackgroundEffect({
+      assetsPath: 'https://d7ca6333nyzk0.cloudfront.net/',
+      maskBlurRadius,
+      virtualBackground:{
+          backgroundType: 'image',
+          backgroundImage: image
+      }
+    });
+    await virtualBg.current.loadModel();
+    initPublisher(virtualBg.current.startEffect(localMediaTrack.current));
+  };
+
   const destroyTracks = ()=>{
     if (localMediaTrack.current){
         localMediaTrack.current.getTracks().forEach((t) => t.stop());
@@ -81,15 +96,19 @@ export function usePublisher() {
 
   const stopEffect = async () => {  
     if (backgroundBlur.current){
-        backgroundBlur.current.stopEffect();
-        destroyTracks();
-        publisher.current.destroy()
+        backgroundBlur.current.stopEffect();    
     }
+    if (virtualBg.current){
+        virtualBg.current.stopEffect();    
+    }
+    destroyTracks();
+    publisher.current.destroy()
   };
 
   return {
     publisher,
     startBackgroundBlur,
+    startVirtualBgEffect,
     stopEffect
   };
 }

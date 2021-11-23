@@ -70,18 +70,17 @@ export default function EffectOptions({
 
   return (
     <div className={classes.root}>
-      <h3>Blur Effect Options</h3>
+      <h2 style={{textAlign:'start'}}>Video Effect </h2>
       <Grid spacing={2} alignItems="center" container>
         <h3>Mask Blur Radius</h3>
-        <Grid item xs>
-            <Box width={300}>
+        <Grid item>
+          <Box width={300}>
             <Slider
-            value={typeof maskBlurRadius === 'number' ? maskBlurRadius : 0}
-            onChange={handleBlurRadiusChange}
-            aria-labelledby="input-slider"
-          />
-            </Box>
-          
+              value={typeof maskBlurRadius === 'number' ? maskBlurRadius : 0}
+              onChange={handleBlurRadiusChange}
+              aria-labelledby="input-slider"
+            />
+          </Box>
         </Grid>
         <Grid item>
           <Input
@@ -102,12 +101,14 @@ export default function EffectOptions({
       </Grid>
       <Grid spacing={2} alignItems="center" container>
         <h3> Blur Filter Radius</h3>
-        <Grid item xs>
+        <Grid item>
+        <Box width={300}>
           <Slider
             value={typeof blurFilterRadius === 'number' ? blurFilterRadius : 0}
             onChange={handleBlurFilterChange}
             aria-labelledby="input-slider"
           />
+          </Box>
         </Grid>
         <Grid item>
           <Input
@@ -124,16 +125,16 @@ export default function EffectOptions({
               'aria-labelledby': 'input-slider'
             }}
           />
-          <div>
-            <Button
-              variant="contained"
-              onClick={handleStartBlurEffect}
-              color="primary"
-            >
-              Start Blur Effect
-            </Button>
-          </div>
         </Grid>
+      </Grid>
+      <Grid spacing={2} container alignItems="center" >
+        <Button
+          variant="contained"
+          onClick={handleStartBlurEffect}
+          color="primary"
+        >
+          Start Blur Effect
+        </Button>
       </Grid>
     </div>
   );

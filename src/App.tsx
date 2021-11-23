@@ -8,12 +8,16 @@ import BlurEffectOptions from './components/BlurEffectOptions';
 import VirtualBgEffectOptions from './components/VirtualBgEffectOptions';
 
 function App() {
-  const { startBackgroundBlur, stopEffect } = usePublisher();
+  const { startBackgroundBlur, startVirtualBgEffect, stopEffect } = usePublisher();
   const [maskBlurRadius, setMaskBlurRadius] = React.useState(5);
   const [blurFilterRadius, setBlurFilterRadius] = React.useState(15);
 
   const startBlur = () => {
     startBackgroundBlur({ maskBlurRadius, blurFilterRadius });
+  };
+
+  const startVirtualBg = (image) => {
+    startVirtualBgEffect({ maskBlurRadius, image });
   };
 
   const stopBlur = () => {
@@ -22,7 +26,6 @@ function App() {
 
   return (
     <div className="App">
-      <h3>Publisher</h3>
       <div className="app-container">
         <div id="publisher">
         </div>
@@ -34,7 +37,7 @@ function App() {
             setBlurFilterRadius={setBlurFilterRadius}
             handleStartBlurEffect={startBlur}
           ></BlurEffectOptions>
-          <VirtualBgEffectOptions />
+          <VirtualBgEffectOptions handleStartVirtualBgEffect={startVirtualBg} />
           <div className="buttons-container">
             
             <Button variant="contained" onClick={stopBlur}>
