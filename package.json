@@ -5,7 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "@opentok/client": "^2.21.1",
+    "@opentok/client": "^2.22.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -13,7 +13,7 @@
     "@types/node": "^12.20.36",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
-    "@vonage/video-effects": "^0.2.0",
+    "@vonage/video-effects": "^1.0.0-rc2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",

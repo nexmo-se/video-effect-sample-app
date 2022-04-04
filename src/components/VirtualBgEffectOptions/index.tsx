@@ -38,7 +38,7 @@ export default function VirtualBgEffectOptions({handleStartVirtualBgEffect}) {
 
   // Mask Blur Radius
   // Blur Filter Radius
-  const [selectedImage, setSelectedImage] = React.useState('');
+  const [selectedImage, setSelectedImage] = React.useState(backgroundImages[0]);
 
   const handleChange = (event) => {
     setSelectedImage(event.target.value);
