@@ -23,6 +23,7 @@ export function usePublisher() {
     return OT.getUserMedia({ videoSource, audioSource: null })
       .then((track: any) => {
         localMediaTrack.current = track;
+        return localMediaTrack.current;
       })
       .catch((err) => {
         console.error('OTGetUserMedia - err', err);
@@ -63,26 +64,34 @@ export function usePublisher() {
               maskBlurRadius
             })
           );
-          backgroundEffectProcessor.current.enableEffect(true);  
+          backgroundEffectProcessor.current.enableEffect(true);
+          return true;  
     }
-    
+    return false;  
   };
 
   const startVirtualBgEffect = async ({ maskBlurRadius, image }) => {
-    await backgroundEffectProcessor.current.loadEffect(
-      new VirtualBackgroundEffect({
-        virtualBackground: {
-          backgroundType: 'image',
-          backgroundImage: image
-        },
-        maskBlurRadius
-      })
-    );
-    backgroundEffectProcessor.current.enableEffect(true);
+    if (backgroundEffectProcessor.current) {
+        await backgroundEffectProcessor.current.loadEffect(
+            new VirtualBackgroundEffect({
+              virtualBackground: {
+                backgroundType: 'image',
+                backgroundImage: image
+              },
+              maskBlurRadius
+            })
+          );
+          backgroundEffectProcessor.current.enableEffect(true);
+          return true;  
+    }
+    return false;  
   };
 
-  const switchCamera = (newCameraStream: MediaStream) => {
-    backgroundEffectProcessor.current.setInputStream(newCameraStream);
+  const switchCamera = async (newCameraStream: string) => {
+      console.log("switchCamera", newCameraStream)
+    destroyTracks();
+    const track = await createLocalTrack(newCameraStream);
+    backgroundEffectProcessor.current.setInputStream(track);
   };
 
   const pauseEffect = (pause: boolean) => {
@@ -135,6 +144,7 @@ export function usePublisher() {
     stopEffect,
     createBackgroudEffectProcessor,
     pauseEffect,
-    enableEffect
+    enableEffect,
+    switchCamera
   };
 }

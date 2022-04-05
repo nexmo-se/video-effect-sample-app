@@ -1,11 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import BlurCircular from '@material-ui/icons/BlurCircular';
-import { Box, Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +23,7 @@ export default function EffectOptions({
   handleStartBlurEffect
 }) {
   const classes = useStyles();
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const handleBlurRadiusChange = (event, newValue) => {
     setMaskBlurRadius(newValue);
   };
@@ -65,24 +64,22 @@ export default function EffectOptions({
     }
   };
 
+  const startBlurEffect = async () => {
+     setIsLoading(true);
+     handleStartBlurEffect().then(()=>{
+         setIsLoading(false);
+     });
+  }
+
   // Mask Blur Radius
   // Blur Filter Radius
 
   return (
     <div className={classes.root}>
-      <h2 style={{textAlign:'start'}}>Video Effect </h2>
-      <Grid spacing={2} alignItems="center" container>
+      <div>
         <h3>Mask Blur Radius</h3>
-        <Grid item>
-          <Box width={300}>
-            <Slider
-              value={typeof maskBlurRadius === 'number' ? maskBlurRadius : 0}
-              onChange={handleBlurRadiusChange}
-              aria-labelledby="input-slider"
-            />
-          </Box>
-        </Grid>
-        <Grid item>
+        <div style={{display:'flex'}}>
+        <div>
           <Input
             className={classes.input}
             value={maskBlurRadius}
@@ -97,20 +94,23 @@ export default function EffectOptions({
               'aria-labelledby': 'input-slider'
             }}
           />
-        </Grid>
-      </Grid>
-      <Grid spacing={2} alignItems="center" container>
+        </div>
+        <div>
+            <Slider
+              value={typeof maskBlurRadius === 'number' ? maskBlurRadius : 0}
+              onChange={handleBlurRadiusChange}
+              aria-labelledby="input-slider"
+              style={{width: 200, marginLeft: 10}}
+            />
+        </div>
+        
+        </div>
+        
+      </div>
+      <div >
         <h3> Blur Filter Radius</h3>
-        <Grid item>
-        <Box width={300}>
-          <Slider
-            value={typeof blurFilterRadius === 'number' ? blurFilterRadius : 0}
-            onChange={handleBlurFilterChange}
-            aria-labelledby="input-slider"
-          />
-          </Box>
-        </Grid>
-        <Grid item>
+        <div style={{display:'flex'}}>
+        <div>
           <Input
             className={classes.input}
             value={blurFilterRadius}
@@ -125,17 +125,27 @@ export default function EffectOptions({
               'aria-labelledby': 'input-slider'
             }}
           />
-        </Grid>
-      </Grid>
-      <Grid spacing={2} container alignItems="center" >
-        <Button
+        </div>
+        <div>
+          <Slider
+            value={typeof blurFilterRadius === 'number' ? blurFilterRadius : 0}
+            onChange={handleBlurFilterChange}
+            aria-labelledby="input-slider"
+            style={{width: 200, marginLeft: 10}}
+          />
+        </div>
+        </div>
+      </div>
+      <div >
+      {isLoading ? <CircularProgress /> : <Button
           variant="contained"
-          onClick={handleStartBlurEffect}
+          onClick={startBlurEffect}
           color="primary"
+          style={{marginTop: 15}}
         >
           Start Blur Effect
-        </Button>
-      </Grid>
+        </Button>}
+      </div>
     </div>
   );
 }

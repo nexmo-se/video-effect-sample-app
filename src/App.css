@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  justify-content: center;
+align-items: center;
 }
 
 .App-logo {
@@ -37,7 +40,9 @@
 .effect-options-container {
     display: flex;
     flex-direction: column;
-    flex: 50%
+    flex: 50%;
+    justify-content: center;
+    align-items: center;
 }
 
 #publisher {
@@ -50,6 +55,12 @@
 .buttons-container {
     display: flex;
     margin: 15px;
+}
+
+.video-source-change{
+    display:flex;
+    flex-direction: column;
+    flex: 50%
 }
 
 @keyframes App-logo-spin {
